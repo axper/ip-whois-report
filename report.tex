@@ -1,0 +1,37 @@
+\documentclass{article}
+
+
+\usepackage{verbatim}
+
+
+\pagenumbering{gobble}
+
+
+\newcounter{reportid}
+\newwrite\writecompilation
+\newread\readcompilation
+\openin\readcompilation=report-id.txt
+\ifeof\readcompilation
+\setcounter{reportid}{1}%
+\else
+\read\readcompilation to \temp
+\setcounter{reportid}{\temp}%
+\stepcounter{reportid}%
+\fi
+\closein\readcompilation
+\immediate\openout\writecompilation=report-id.txt
+\immediate\write\writecompilation{\thereportid}
+\immediate\closeout\writecompilation
+
+
+\title{IP report \#\thereportid}
+\author{Author Name}
+
+
+\begin{document}
+
+\maketitle
+
+\verbatiminput{whois.txt}
+
+\end{document}
