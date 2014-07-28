@@ -54,10 +54,11 @@ def write_whois_info_to_file(ip_address, file_name):
     whois_file.close()
 
 
-print('ip-whois-pdf-latex-report  Copyright (C) 2014  Babken Vardanyan'\
-      'This program comes with ABSOLUTELY NO WARRANTY; for details see LICENSE'\
-      'This is free software, and you are welcome to redistribute it'\
-      'under certain conditions; see LICENSE for details.')
+print('ip-whois-pdf-latex-report  Copyright (C) 2014  Babken Vardanyan\n'\
+      'This program comes with ABSOLUTELY NO WARRANTY;'\
+      'for details see LICENSE\n'\
+      'This is free software, and you are welcome to redistribute it\n'\
+      'under certain conditions; see LICENSE for details.\n')
 IP = input('Enter IP: ')
 
 IP_FILE = open(IP_FILE_NAME, 'w')
