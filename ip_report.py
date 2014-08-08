@@ -1,6 +1,25 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
+'''
+    PDF IP WHOIS info file generator using LaTeX
+
+    Copyright (C) 2014  Babken Vardanyan
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+'''
+
 from __future__ import print_function
 import subprocess
 import os
@@ -13,13 +32,12 @@ from ipwhois.utils import get_countries
 
 # 2 & 3 compat
 try:
-    range = xrange
     input = raw_input
 except NameError:
     pass
 
 
-def create_backup(filename, ip):
+def create_backup(filename, ip_address):
     ''' Copies filename into backup directory and returns full path of it
     '''
     backup_dir = 'backups'
@@ -29,7 +47,7 @@ def create_backup(filename, ip):
 
     backup_filename = time.strftime('%d.%m.%Y_%H.%M.%S') +\
                       '__' +\
-                      ip +\
+                      ip_address +\
                       '__' +\
                       filename
     backup_full_path = os.path.join(backup_dir, backup_filename)
@@ -49,13 +67,14 @@ def get_string(data_structure, index):
         return ''
 
 
-def get_whois_info(ip):
-    ip_info = IPWhois(ip).lookup_rws()
+def get_whois_info(ip_address):
+    ''' Returns WHOIS info about given ip_address as a string '''
+    ip_info = IPWhois(ip_address).lookup_rws()
 
     country_string = get_countries()[ip_info['asn_country_code']]
 
     whois_string =\
-        'IP address: ' + ip + '\n' +\
+        'IP address: ' + ip_address + '\n' +\
         'ASN (Autonomous System number): ' + get_string(ip_info, 'asn') +\
         '\n' +\
         'ASN CIDR: ' + get_string(ip_info, 'asn_cidr') + '\n' +\
@@ -94,7 +113,8 @@ def compile_latex(filename_tex):
     except FileNotFoundError:
         print('Did not find xelatex in $PATH, looking for dir miktex_porable')
         try:
-            subprocess.call(['miktex_portable\\miktex\\bin\\xelatex.exe', filename_tex])
+            subprocess.call(['miktex_portable\\miktex\\bin\\xelatex.exe',
+                             filename_tex])
         except FileNotFoundError:
             print('Could not find local porable directory either. Aborting')
             sys.exit(1)
@@ -109,18 +129,19 @@ def view_file(filename):
 
 
 def main():
-    ip = input('Enter IP:')
+    ''' Main function '''
+    ip_address = input('Enter IP:')
 
     with open('ip.txt', 'w') as file_ip:
-        file_ip.write(ip)
+        file_ip.write(ip_address)
 
     with open('report.txt', 'w') as file_report:
-        whois_info = get_whois_info(ip)
+        whois_info = get_whois_info(ip_address)
         file_report.write(whois_info)
 
     compile_latex('report.tex')
 
-    report_pdf = create_backup('report.pdf', ip)
+    report_pdf = create_backup('report.pdf', ip_address)
 
     view_file(report_pdf)
 
