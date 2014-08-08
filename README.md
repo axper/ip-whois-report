@@ -9,7 +9,7 @@ Requirements
 1. Python 3
 2. `pip3 install dnspython`
 3. `pip3 install ipwhois`
-4. LaTeX with `verbatim` package
+4. LaTeX
 
 Usage
 =====

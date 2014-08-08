@@ -155,3 +155,12 @@ sympy-plots-for-*.tex/
 
 # xindy
 *.xdy
+
+
+# Custom
+backups
+ip.txt
+report-id.txt
+report.pdf
+report.txt
+

@@ -1,7 +1,7 @@
 \documentclass{article}
 
 
-\usepackage{verbatim}
+\usepackage{listings}
 
 
 \pagenumbering{gobble}
@@ -24,7 +24,7 @@
 \immediate\closeout\writecompilation
 
 
-\title{IP report \#\thereportid}
+\title{IP report \#\thereportid\\About IP \input{ip.txt}}
 \author{Author Name}
 
 
@@ -32,6 +32,6 @@
 
 \maketitle
 
-\verbatiminput{whois.txt}
+\lstinputlisting[breaklines,basicstyle=\footnotesize\ttfamily]{report.txt}
 
 \end{document}
