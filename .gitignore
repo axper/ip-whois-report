@@ -160,7 +160,7 @@ sympy-plots-for-*.tex/
 # Custom
 backups
 ip.txt
-report-id.txt
+id.txt
 report.pdf
 report.txt
 

@@ -10,7 +10,7 @@
 \newcounter{reportid}
 \newwrite\writecompilation
 \newread\readcompilation
-\openin\readcompilation=report-id.txt
+\openin\readcompilation=id.txt
 \ifeof\readcompilation
 \setcounter{reportid}{1}%
 \else
@@ -19,7 +19,7 @@
 \stepcounter{reportid}%
 \fi
 \closein\readcompilation
-\immediate\openout\writecompilation=report-id.txt
+\immediate\openout\writecompilation=id.txt
 \immediate\write\writecompilation{\thereportid}
 \immediate\closeout\writecompilation
 
