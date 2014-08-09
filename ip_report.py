@@ -120,12 +120,12 @@ def compile_latex(filename_tex):
     '''
     try:
         subprocess.call(['xelatex', filename_tex])
-    except FileNotFoundError:
+    except OSError:
         print('Did not find xelatex in $PATH, looking for dir miktex_porable')
         try:
             subprocess.call(['miktex_portable\\miktex\\bin\\xelatex.exe',
                              filename_tex])
-        except FileNotFoundError:
+        except OSError:
             print('Could not find local porable directory either. Aborting')
             sys.exit(1)
 
