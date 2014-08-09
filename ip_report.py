@@ -71,18 +71,28 @@ def get_whois_info(ip_address):
     ''' Returns WHOIS info about given ip_address as a string '''
     ip_info = IPWhois(ip_address).lookup_rws()
 
-    country_string = get_countries()[ip_info['asn_country_code']]
+    country_list = get_countries()
+
+    country_code = ip_info['asn_country_code']
+    try:
+        country_name = country_list[country_code]
+    except KeyError:
+        country_name = 'UNKNOWN(' + country_code + ')'
 
     whois_string =\
         'IP address: ' + ip_address + '\n' +\
         'ASN (Autonomous System number): ' + get_string(ip_info, 'asn') +\
         '\n' +\
         'ASN CIDR: ' + get_string(ip_info, 'asn_cidr') + '\n' +\
-        'ASN Country: ' + country_string + '\n' +\
+        'ASN Country: ' + country_name + '\n' +\
         'ASN Registry: ' + get_string(ip_info, 'asn_registry') + '\n'
 
     for net in ip_info['nets']:
-        country_string = get_countries()[ip_info['asn_country_code']]
+        country_code = get_string(net, 'country')
+        try:
+            country_name = country_list[country_code]
+        except KeyError:
+            country_name = 'UNKNOWN(' + country_code + ')'
 
         whois_string += '==== ' + get_string(net, 'name') + ' ====' + '\n' +\
             get_string(net, 'description') + ':\n' +\
@@ -90,7 +100,7 @@ def get_whois_info(ip_address):
             '    Created: ' + get_string(net, 'created') + '\n' +\
             '    Updated: ' + get_string(net, 'updated') + '\n' +\
             '    ==== Geographic Data ====' + '\n' +\
-            '    Country: ' + country_string + '\n' +\
+            '    Country: ' + country_name + '\n' +\
             '    State: ' + get_string(net, 'state') + '\n' +\
             '    City: ' + get_string(net, 'city') + '\n' +\
             '    Address: ' + get_string(net, 'address') + '\n' +\
