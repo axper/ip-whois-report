@@ -26,8 +26,8 @@ import os
 import shutil
 import time
 import sys
-from ipwhois import IPWhois
-from ipwhois.utils import get_countries
+import ipwhois
+import ipwhois.utils
 
 
 # 2 & 3 compat
@@ -69,9 +69,9 @@ def get_string(data_structure, index):
 
 def get_whois_info(ip_address):
     ''' Returns WHOIS info about given ip_address as a string '''
-    ip_info = IPWhois(ip_address).lookup_rws()
+    ip_info = ipwhois.IPWhois(ip_address).lookup()
 
-    country_list = get_countries()
+    country_list = ipwhois.utils.get_countries()
 
     country_code = ip_info['asn_country_code']
     try:
