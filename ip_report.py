@@ -69,7 +69,10 @@ def get_string(data_structure, index):
 
 def get_whois_info(ip_address):
     ''' Returns WHOIS info about given ip_address as a string '''
-    ip_info = ipwhois.IPWhois(ip_address).lookup()
+    try:
+        ip_info = ipwhois.IPWhois(ip_address).lookup()
+    except ipwhois.ipwhois.WhoisLookupError:
+        ip_info = ipwhois.IPWhois(ip_address).lookup_rws()
 
     country_list = ipwhois.utils.get_countries()
 
